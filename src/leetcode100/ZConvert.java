@@ -1,8 +1,5 @@
 package leetcode100;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Z 字形变换
  *
