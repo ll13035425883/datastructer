@@ -3,54 +3,30 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        while(sc.hasNextLine()) {
-            String s = sc.nextLine();
-            String[] strings = s.split(",");
-            int[] arr = new int[strings.length];
-            for (int i = 0; i < strings.length; i++) {
-                arr[i] = Integer.parseInt(strings[i]);
+        while(sc.hasNext()) {
+            String line = sc.nextLine();
+            String temp = line;
+            int i = 1;
+            while (!judge(line)) {
+                line = temp;
+                StringBuilder stringBuilder = new StringBuilder(line.substring(line.length() - i++));
+                String sub = stringBuilder.reverse().toString();
+                line = sub + line;
             }
-            quickSort(arr, 0, arr.length - 1);
-            for (int i = 0; i < arr.length; i++) {
-                if(i == 0) {
-                    System.out.print("[" + arr[i] + ", ");
-                } else if(i != arr.length - 1) {
-                    System.out.print(arr[i] + ", ");
-                } else {
-                    System.out.println(arr[i] + "]");
-                }
-            }
+            System.out.println(line);
         }
     }
 
-    public static void quickSort(int[] arr, int low, int high) {
-        if(low < high) {
-            int p = partition(arr, low, high);
-            quickSort(arr, low, p - 1);
-            quickSort(arr, p + 1, high);
+    private static boolean judge(String s) {
+        if(s.length() <= 1) {
+            return true;
         }
-    }
-
-    public static int partition(int[] arr, int low, int high) {
-        int temp = arr[low];
-        int i = low, j = high;
-        while(i < j) {
-            while(i < j && temp < arr[j]) {
-                j--;
-            }
-            if(i < j) {
-                arr[i] = arr[j];
-                i++;
-            }
-            while(i < j && temp > arr[i]) {
-                i++;
-            }
-            if(i < j) {
-                arr[j] = arr[i];
-                j--;
+        int j = s.length() - 1, i = 0;
+        while (i < j) {
+            if(s.charAt(i++) != s.charAt(j--)) {
+                return false;
             }
         }
-        arr[i] = temp;
-        return i;
+        return true;
     }
 }
